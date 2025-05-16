@@ -21,6 +21,9 @@ wheels/
 .installed.cfg
 *.egg
 
+# Project specific
+playground.py
+
 # Virtual Environment
 venv/
 ENV/

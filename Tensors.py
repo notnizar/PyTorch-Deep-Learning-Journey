@@ -1,4 +1,5 @@
 import torch
+import numpy as np
 
 # PyTorch Tensors
 # Tensors repressent item in numerical data that can be processed by a computer
@@ -175,3 +176,89 @@ print (unsqueezed_tensor) # [[1, 2, 3]]
 flattened_tensor = torch.tensor([[1, 2], [3, 4]])
 flattened_tensor = flattened_tensor.flatten()
 print (flattened_tensor) # [1, 2, 3, 4]
+
+
+
+
+# indexing and slicing
+# indexing is used to access a single element in the tensor
+# slicing is used to access a range of elements in the tensor
+
+# ex: Indexing
+tensor = torch.tensor([[1, 2], [3, 4]])
+print (tensor[0, 1]) # 2
+
+# ex: Slicing
+tensor = torch.tensor([[1, 2], [3, 4]])
+print (tensor[0:1, 0:2]) # [[1, 2]]
+# ex: Slicing with step
+tensor = torch.tensor([[1, 2], [3, 4]])
+print (tensor[0:2:1, 0:2:1]) # [[1, 2], [3, 4]]
+# ex: Slicing with negative step
+tensor = torch.tensor([[1, 2], [3, 4]])
+print (tensor[0:2:-1, 0:2:-1]) # [[4, 3], [2, 1]]
+
+
+# Numpy with PyTorch
+# PyTorch tensors and NumPy arrays are similar, but they are not the same
+# PyTorch tensors are more flexible and can be used on GPUs, while NumPy arrays are more efficient for CPU operations
+# PyTorch tensors can be converted to NumPy arrays and vice versa
+# ex: Convert a PyTorch tensor to a NumPy array
+tensor = torch.tensor([[1, 2], [3, 4]])
+numpy_array = tensor.numpy()
+print (numpy_array) # [[1, 2], [3, 4]]
+
+# ex: Convert a NumPy array to a PyTorch tensor
+numpy_array = np.array([[1, 2], [3, 4]])
+tensor = torch.from_numpy(numpy_array)
+print (tensor) # [[1, 2], [3, 4]]
+
+# ex: Convert a NumPy array to a PyTorch tensor with a different data type
+numpy_array = np.array([[1, 2], [3, 4]], dtype=np.float32)
+tensor = torch.from_numpy(numpy_array)
+print (tensor) # [[1, 2], [3, 4]]
+
+# ex: Convert a PyTorch tensor to a NumPy array with a different data type
+tensor = torch.tensor([[1, 2], [3, 4]], dtype=torch.float32)
+numpy_array = tensor.numpy()
+print (numpy_array) # [[1, 2], [3, 4]]
+
+# note : the default data type of a PyTorch tensor is torch.float32, while the default data type of a NumPy array is np.float64
+
+
+# Random seed 
+# Random seed is used to initialize the random number generator
+# ex: Set the random seed  
+torch.manual_seed(55)
+torch.rand(2, 3) # [[0.1234, 0.5678, 0.9101], [0.1121, 0.3141, 0.5161]]
+torch.manual_seed(55)
+torch.rand(2, 3) # [[0.1234, 0.5678, 0.9101], [0.1121, 0.3141, 0.5161]]
+# note when you set a random seed it will work for only one block of code
+
+
+# GPU Tensors
+# PyTorch tensors can be used on GPUs to speed up the computation
+# ex: Check if GPU is available
+if torch.cuda.is_available():
+    device = torch.device("cuda") # cuda mean GPU
+else: 
+    device = torch.device("cpu")
+print (device)
+
+# ex: Create a tensor on the GPU
+tensor = torch.tensor([[1, 2], [3, 4]], device='cuda')
+print (tensor) # [[1, 2], [3, 4]]
+
+# ex: Move a tensor to the Cpu
+tensor = torch.tensor([[1, 2], [3, 4]])
+tensor = tensor.to('cpu')
+print (tensor) # [[1, 2], [3, 4]]
+
+#note: Numpy arrays cannot be used on GPUs, so if you want to use a NumPy array on a GPU, you need to convert it to a PyTorch tensor first
+# ex: Convert a NumPy array to a PyTorch tensor on the GPU
+numpy_array = np.array([[1, 2], [3, 4]])
+tensor = torch.from_numpy(numpy_array).to('cuda')
+print (tensor) # [[1, 2], [3, 4]]
+
+
+# End this is just basic introduction to PyTorch tensors i have learned and there is much more to learn about PyTorch tensors you can visit the official documentation for more information https://pytorch.org/docs/stable/tensors.html
